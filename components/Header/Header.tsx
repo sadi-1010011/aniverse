@@ -1,4 +1,4 @@
-import { Search, Tv, User2Icon } from "lucide-react";
+import { Search, User2Icon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import Logo from '@/public/logo.svg';
