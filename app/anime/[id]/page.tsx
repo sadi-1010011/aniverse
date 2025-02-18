@@ -4,6 +4,7 @@ import { Bookmark, PlayCircle, Video } from "lucide-react";
 import Image from "next/image"
 import { use } from 'react';
 import { useEffect, useState } from "react";
+import Logo from "@/public/logo.svg";
 
 
 type Params = Promise<{ id: string }>
@@ -61,7 +62,7 @@ export default function AnimePage({ params }: { params: Params}) {
                 </div>
                 <div className="bg-gray-50 p-3 rounded-lg">
                     <div className="text-sm text-gray-500">Release Date</div>
-                    <div className="font-medium">{selectedAnime?.aired.from.split('T')[0]}</div>
+                    <div className="font-medium">{selectedAnime?.aired.from.toString().split('T')[0]}</div>
                 </div>
                 <div className="bg-gray-50 p-3 rounded-lg">
                     <div className="text-sm text-gray-500">Duration</div>
@@ -98,7 +99,7 @@ export default function AnimePage({ params }: { params: Params}) {
             </div>
             </div>
                 :
-            <h2 className="h-screen w-full inline-flex items-center justify-center bg-gray-50 text-center my-2 text-gray-500 ">Loading...</h2>
+                <div className="flex h-screen flex-col w-full items-center justify-center overflow-hidden"><Image src={Logo} width={500} height={500} alt="search" className="w-[10svw] h-auto rounded-full" /></div>
             }
             
         </div>

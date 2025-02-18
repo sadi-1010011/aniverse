@@ -1,0 +1,1 @@
+export const fallbackImage = "https://img.freepik.com/free-photo/anime-night-sky-illustration_23-2151684327.jpg?semt=ais_hybrid";

@@ -9,14 +9,20 @@ export type animeType = {
     rating: number,
     synopsis: string,
     genre: string,
+    popularity: number,
+    airing: boolean,
     episodes: number,
     status: string,
+    score: number,
     aired: {
-        from: string,
+        from: string|Date,
         string: string
     },
     entry: animeType[],
     duration: string,
+    genres: [{
+        name: string
+    }],
     mal_id: number,
     studios: [{
         name: string

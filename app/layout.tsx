@@ -1,6 +1,7 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Head from "next/head";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,6 +18,12 @@ export const metadata: Metadata = {
   description: "Explore the Anime Verse",
 };
 
+export const viewport: Viewport = {
+  themeColor: '#000000',
+  viewportFit: 'cover',
+  
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -24,6 +31,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <Head>
+          <link rel="manifest" href="/public/manifest.json" />
+      </Head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white`}
       >

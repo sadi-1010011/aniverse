@@ -16,7 +16,7 @@ export default function Featured() {
     // Fetch TopAnime
     const getFeaturedAnime = async () => {
         try {
-            const response = await fetch('https://api.jikan.moe/v4/top/anime');
+            const response = await fetch('https://api.jikan.moe/v4/top/anime?page=1');
             const anime = await response.json();
             if (anime && anime.data) {
                 setFeaturedAnime(anime.data.slice(0, 5));
@@ -55,7 +55,8 @@ export default function Featured() {
                                     <i className="fa-solid fa-star text-yellow-400 mr-1"></i>
                                     <span>{anime.rating}</span>
                                 </div>
-                                <p className="text-sm opacity-90">{anime.synopsis.slice(0, 64) + '...'}</p>
+                                {/* DESCRIPTION */}
+                                {/* <p className="text-sm opacity-90">{anime.synopsis.slice(0, 64) + '...'}</p> */}
                             </div>
                         </div>
                     ))
