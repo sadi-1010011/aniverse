@@ -4,7 +4,7 @@ import { Bookmark, PlayCircle, Video } from "lucide-react";
 import Image from "next/image"
 import { use } from 'react';
 import { useEffect, useState } from "react";
-import Logo from "@/public/logo.svg";
+import Logo from "@/public/logo/logo.svg";
 
 
 type Params = Promise<{ id: string }>
@@ -78,7 +78,7 @@ export default function AnimePage({ params }: { params: Params}) {
                 <div>
                 <h3 className="text-lg font-bold mb-2">Studio</h3>
                 <div className="flex items-center space-x-2">
-                    <Video className="w-5 h-5 text-indigo-600" />
+                    <Video className="w-5 h-5 text-primary" />
                     {
                         selectedAnime?.studios?.map((studio) => 
                             <span key={studio.name}>{studio.name}</span>
@@ -88,7 +88,7 @@ export default function AnimePage({ params }: { params: Params}) {
                 </div>
 
                 <div className="flex space-x-4">
-                <button onClick={()=> alert('Feature upcoming...')} className="flex-1 px-4 py-3 bg-indigo-600 text-white font-medium !rounded-button">
+                <button onClick={()=> alert('Feature upcoming...')} className="flex-1 px-4 py-3 bg-primary text-white font-medium !rounded-button">
                     <PlayCircle className="w-5 h-5 inline mr-2" />
                     Watch Now
                 </button>

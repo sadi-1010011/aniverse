@@ -1,0 +1,49 @@
+// delete user
+
+
+  const handleRemoveUser = async (id: string) => {
+    try {
+      await deleteData(Stores.Users, 'foo');
+      // refetch users after deleting data
+      handleGetUsers();
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Something went wrong deleting the user');
+      }
+    }
+  };
+
+  // ...
+
+  return (
+    // ...
+    {users.length > 0 && (
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>ID</th>
+            // header
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.map((user) => (
+            <tr key={user.id}>
+              <td>{user.name}</td>
+              <td>{user.email}</td>
+              <td>{user.id}</td>
+              // here the button
+              <td>
+                <button onClick={() => handleRemoveUser(user.id)}>Delete</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    )}
+  );
+}

@@ -33,9 +33,10 @@ export default function RootLayout({
     <html lang="en">
       <Head>
           <link rel="manifest" href="/public/manifest.json" />
+          <link rel="icon" href="/favicon.png" sizes="192x192" />
       </Head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 lg:w-2/5 lg:mx-auto`}
       >
         {children}
       </body>

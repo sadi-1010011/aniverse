@@ -6,12 +6,11 @@ import { animeType } from "@/types/animeType";
 import { Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import Logo from "@/public/logo.svg";
+import Logo from "@/public/logo/logo.svg";
 import { useEffect, useState } from "react";
+import { fallbackImage } from "@/lib/fallbackimage";
 
 export default function SearchPage() {
-
-    const fallbackImage = "https://img.freepik.com/free-photo/anime-night-sky-illustration_23-2151684327.jpg?semt=ais_hybrid";
 
     const [notfound, setNotfound] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
@@ -98,18 +97,18 @@ export default function SearchPage() {
             )
         );
         setSearchResult(sortedgenre || null);
-    }, [selectedGenres])
+    }, [searchResult, selectedGenres])
 
     return (
     <div className="min-h-screen bg-gray-50 text-black">
         <Header />
         
         {/* Search Bar */}
-        <div className="p-4 mt-14">
+        <div className="p-4">
             <form onSubmit={handleSearch} className="relative">
             <input
                 type="text"
-                className="w-full h-12 pl-12 pr-4 rounded-full bg-white shadow-sm border-none text-sm"
+                className="w-full h-12 pl-12 pr-4 rounded-full bg-white shadow-sm border-none text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                 placeholder="Search anime..."
                 value={searchQuery}
                 onChange={(e) => { setSearchQuery(e.target.value); getSearchAnime() }}
@@ -127,7 +126,7 @@ export default function SearchPage() {
                 onClick={() => toggleGenre(genre.name)}
                 className={`flex items-center px-4 py-2 !rounded-button whitespace-nowrap ${
                   selectedGenres.includes(genre.name)
-                    ? 'bg-indigo-600 text-white'
+                    ? 'bg-primary text-white'
                     : 'bg-white text-gray-700'
                 }`}
               >
@@ -170,7 +169,7 @@ export default function SearchPage() {
             {searchQuery && notfound && <h2 className="text-center my-2 text-gray-500 ">Could&apos;nt find {searchQuery}!</h2>}
         
         {/* Filter button */}
-        <button onClick={() => setShowFilters(true)} className="fixed right-4 bottom-20 w-12 h-12 bg-indigo-600 text-white rounded-full shadow-lg flex items-center justify-center">
+        <button onClick={() => setShowFilters(true)} className="fixed right-4 bottom-20 w-12 h-12 bg-primary text-white rounded-full shadow-lg flex items-center justify-center">
             <SlidersHorizontal className="w-5 h-5"/>
         </button>
 
@@ -181,7 +180,7 @@ export default function SearchPage() {
             <div className="flex justify-between items-center mb-6">
               <h3 className="text-lg font-bold">Filters</h3>
               <button onClick={() => setShowFilters(false)}>
-                <X className="text-violet-600 w-5 h-5" />
+                <X className="text-primary w-5 h-5" />
               </button>
             </div>
 
@@ -195,7 +194,7 @@ export default function SearchPage() {
                       onClick={() => setStatus(s.toLowerCase())}
                       className={`px-4 py-2 !rounded-button ${
                         status === s.toLowerCase()
-                          ? 'bg-indigo-600 text-white'
+                          ? 'bg-primary text-white'
                           : 'bg-gray-100'
                       }`}
                     >
@@ -214,7 +213,7 @@ export default function SearchPage() {
                       onClick={() => setSortBy(s.toLowerCase())}
                       className={`px-4 py-2 !rounded-button ${
                         sortBy === s.toLowerCase()
-                          ? 'bg-indigo-600 text-white'
+                          ? 'bg-primary text-white'
                           : 'bg-gray-100'
                       }`}
                     >
@@ -226,7 +225,7 @@ export default function SearchPage() {
 
               <button
                 onClick={() => applyFilters()}
-                className="w-full py-3 bg-indigo-600 text-white !rounded-button"
+                className="w-full py-3 bg-primary text-white !rounded-button"
               >
                 Apply Filter
               </button>

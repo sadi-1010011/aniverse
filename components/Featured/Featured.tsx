@@ -19,7 +19,7 @@ export default function Featured() {
             const response = await fetch('https://api.jikan.moe/v4/top/anime?page=1');
             const anime = await response.json();
             if (anime && anime.data) {
-                setFeaturedAnime(anime.data.slice(0, 5));
+                setFeaturedAnime(anime.data.slice(0, 8));
             }
         } catch (error) {
             console.error("Failed to fetch featured anime:", error);
@@ -31,10 +31,10 @@ export default function Featured() {
     }, [])
 
     return (
-            <Carousel autoPlay infiniteLoop interval={4500} showArrows={false} showIndicators={true} showThumbs={false} swipeable className="mb-6">
+            <Carousel autoPlay infiniteLoop interval={4500} showArrows={false} showStatus={false} showIndicators={false} showThumbs={false} swipeable className="mb-6">
                 {
                     featuredAnime?.map((anime: animeType, i: number) => (
-                        <div onClick={() => router.push(`/anime/${anime.mal_id}`)} key={i} className="relative h-[50svh]">
+                        <div onClick={() => router.push(`/anime/${anime.mal_id}`)} key={i} className="relative h-[40svh]">
                             <div className="absolute inset-0">
                                 <Image
                                     priority
@@ -46,7 +46,7 @@ export default function Featured() {
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                             </div>
-                            <div className="absolute top-2 right-4 bg-indigo-600 text-white px-3 py-1 rounded-full text-xs">
+                            <div className="absolute top-2 right-4 bg-primary text-white px-3 py-1 rounded-full text-xs">
                                 Featured
                             </div>
                             <div className="absolute bottom-4 left-4 right-4 text-white text-left">

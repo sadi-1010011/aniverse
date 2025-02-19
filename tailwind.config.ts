@@ -14,7 +14,10 @@ export default {
         primary: '#8B5CF6',
         secondary: '#F59E0B'
       },
-    borderRadius: {
+      input: {
+        "aniverse-input": "py-2 px-4 rounded-button bg-white text-black my-1 focus:outline-none focus:ring-2 focus:ring-primary"
+      },
+      borderRadius: {
         'none': '0px',
         'sm': '4px',
         DEFAULT: '8px',
