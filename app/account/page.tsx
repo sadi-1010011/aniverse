@@ -1,9 +1,9 @@
 "use client"
 import Header from "@/components/Header/Header";
-import { getStoreData, initDB, Stores } from "@/db/db";
+import { deleteData, getStoreData, initDB, Stores } from "@/db/db";
 import { fallbackCharacter } from "@/lib/fallbackCharacter";
 import { userType } from "@/types/userType";
-import { Atom } from "lucide-react";
+import { Atom, LogOut } from "lucide-react";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -12,6 +12,14 @@ export default function AccountPage() {
 
     const [user, setUser] = useState<userType|null>(null);
 
+    const deleteAccount = () => {
+        const user = localStorage.getItem('login') ? JSON.parse(localStorage.getItem('login') as string) : null;
+        localStorage.clear();
+        initDB();
+        console.log(user?.id)
+        deleteData(Stores.Users, user?.id as string).then(res => alert('deleted user'))
+        window?.location.replace('/profile')
+    }
     useEffect(() => {        
 
         const handleGetUser = async () => {
@@ -36,6 +44,7 @@ export default function AccountPage() {
 
                 <h1 className="w-full inline-block font-extrabold text-gray-600 text-2xl text-left my-4 px-4">Profile</h1>
 
+                {/* PROFILE CARD */}
                 <div className="container">
                     <div className="row">
                         
@@ -74,6 +83,15 @@ export default function AccountPage() {
                                 <span className="text-xs font-semibold capitalize text-slate-500">waiting</span>
                             </div>
                         </div> */}
+                    </div>
+                </div>
+
+                <div className="absolute bottom-0 container my-6">
+                    <div className="col text-center">
+                        <button onClick={ deleteAccount } className="inline-flex items-center justify-center px-4 py-2 bg-tertiary text-white font-medium !rounded-button">
+                            <LogOut className="w-5 h-5 inline mr-2" />
+                            Delete Account
+                        </button>
                     </div>
                 </div>
             </div>

@@ -15,6 +15,7 @@ export default function SearchPage() {
     const [notfound, setNotfound] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResult, setSearchResult] = useState<animeType[]|null>([]);
+    const [filteredResult, setFilteredResult] = useState<animeType[]|null>(null);
     const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
     const [showFilters, setShowFilters] = useState(false);
     const [status, setStatus] = useState('all');
@@ -38,8 +39,15 @@ export default function SearchPage() {
         getSearchAnime()
     }
 
+    function clearSearch() {
+      setSearchResult(null)
+      setFilteredResult(null);
+      setSearchQuery('')
+      setSortBy('all')
+      setStatus('popular')
+    }
+
     const toggleGenre = (genreName: string) => {
-        console.log(genreName)
         setSelectedGenres(prev => 
           prev.includes(genreName) 
             ? prev.filter(g => g !== genreName)
@@ -49,43 +57,43 @@ export default function SearchPage() {
     };
 
     const applyFilters = () => {
-        let filteredResult;
+        let filteredresults;
         switch (status) {
             case 'all' :
-                filteredResult = searchResult?.filter(anime => 
+                filteredresults = searchResult?.filter(anime => 
                     anime.airing === true || anime.airing === false
                 ); break;
             case 'ongoing' :
-                filteredResult = searchResult?.filter(anime => 
+                filteredresults = searchResult?.filter(anime => 
                     anime.airing === true
                 ); break;
             case 'completed' :
-                filteredResult = searchResult?.filter(anime => 
+                filteredresults = searchResult?.filter(anime => 
                     anime.airing === false
                 ); break;
             default:
-                filteredResult = searchResult?.filter(anime => 
+                filteredresults = searchResult?.filter(anime => 
                     anime.airing === true || anime.airing === false
                 );
         }
 
-        if (filteredResult) {
+        if (filteredresults) {
             switch (sortBy) {
                 case 'popularity':
-                    filteredResult.sort((a, b) => b.popularity - a.popularity);
+                    filteredresults.sort((a, b) => b.popularity - a.popularity);
                     break;
                 case 'rating':
-                    filteredResult.sort((a, b) => b.rating - a.rating);
+                    filteredresults.sort((a, b) => b.rating - a.rating);
                     break;
                 case 'new':
-                    filteredResult.sort((a, b) => new Date(b.aired.from || 0).getTime() - new Date(a.aired.from || 0).getTime());
+                    filteredresults.sort((a, b) => new Date(b.aired.from || 0).getTime() - new Date(a.aired.from || 0).getTime());
                     break;
                 default:
                     break;
             }
         }
     
-        setSearchResult(filteredResult || null)
+        setFilteredResult(filteredresults? filteredresults: null)
         setShowFilters(false)
     }
 
@@ -96,7 +104,7 @@ export default function SearchPage() {
             anime.genres.some(genre => genre.name.toLowerCase() === selectedGenre.toLowerCase())
             )
         );
-        setSearchResult(sortedgenre || null);
+        setFilteredResult(sortedgenre || null);
     }, [searchResult, selectedGenres])
 
     return (
@@ -111,9 +119,10 @@ export default function SearchPage() {
                 className="w-full h-12 pl-12 pr-4 rounded-full bg-white shadow-sm border-none text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                 placeholder="Search anime..."
                 value={searchQuery}
-                onChange={(e) => { setSearchQuery(e.target.value); getSearchAnime() }}
+                onChange={(e) => { setSearchQuery(e.target.value); /* getSearchAnime(); get results as user types feature! */ }}
             />
-            <Search className="w-5 h-5 inline-block absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+            <Search className="absolute w-5 h-5 inline-block left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+            <X onClick={ clearSearch } className="absolute w-4 h-4 inline-block right-4 top-1/2 -translate-y-1/2 active:text-primary transition-colors text-gray-400" />
             </form>
         </div>
 
@@ -130,40 +139,70 @@ export default function SearchPage() {
                     : 'bg-white text-gray-700'
                 }`}
               >
-                {/* <i className={`${g  enre.icon} mr-2`}></i> */}
+                {/* <i className={`${genre.icon} mr-2`}></i> */}
                 {genre.name}
               </button>
             ))}
           </div>
         </div>
 
-        { searchResult?.length ?
-        <div className="grid grid-cols-2 gap-4 px-4 mt-2 mb-8">
-             {searchResult?.map((anime: animeType, i: number) => (
-                <Link href={`/anime/${anime.mal_id}`} key={i} className="bg-white rounded-lg shadow-sm overflow-hidden">
-                    <div className="relative">
-                        <Image
-                            width={500}
-                            height={500}
-                            src={anime.images.jpg.image_url || fallbackImage} 
-                            alt={anime.title}
-                            className="w-full h-32 object-cover"
-                        />
-                    </div>
-
-                    <div className="p-3">
-                        <h4 className="font-medium text-sm mb-1 truncate">{anime.title}</h4>
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center">
-                            <i className="fa-solid fa-star text-yellow-400 text-xs mr-1"></i>
-                            <span className="text-sm text-gray-600">{anime.rating}</span>
+        { filteredResult?.length || searchResult?.length ?
+             !selectedGenres.length && !status && !sortBy && searchResult?.length ?
+                <div className="grid grid-cols-2 gap-4 px-4 mt-2 mb-8">
+                  {/* <h1>search result</h1> */}
+                    {searchResult?.map((anime: animeType, i: number) => (
+                        <Link href={`/anime/${anime.mal_id}`} key={i} className="bg-white rounded-lg shadow-sm overflow-hidden">
+                            <div className="relative">
+                                <Image
+                                    width={500}
+                                    height={500}
+                                    src={anime.images.jpg.image_url || fallbackImage} 
+                                    alt={anime.title}
+                                    className="w-full h-32 object-cover"
+                                />
                             </div>
-                            <span className="text-xs px-2 py-1 bg-gray-100 rounded-full">{anime.genre}</span>
-                        </div>
-                    </div>
-                </Link>
-            ))}
-          </div>
+
+                            <div className="p-3">
+                                <h4 className="font-medium text-sm mb-1 truncate">{anime.title}</h4>
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center">
+                                    <i className="fa-solid fa-star text-yellow-400 text-xs mr-1"></i>
+                                    <span className="text-sm text-gray-600">{anime.rating}</span>
+                                    </div>
+                                    <span className="text-xs px-2 py-1 bg-gray-100 rounded-full">{anime.genre}</span>
+                                </div>
+                            </div>
+                        </Link>
+                    ))}
+                  </div>
+                  :
+                  <div className="grid grid-cols-2 gap-4 px-4 mt-2 mb-8">
+                    {/* <h1>filtered result</h1> */}
+                    {filteredResult?.map((anime: animeType, i: number) => (
+                        <Link href={`/anime/${anime.mal_id}`} key={i} className="bg-white rounded-lg shadow-sm overflow-hidden">
+                            <div className="relative">
+                                <Image
+                                    width={500}
+                                    height={500}
+                                    src={anime.images.jpg.image_url || fallbackImage} 
+                                    alt={anime.title}
+                                    className="w-full h-32 object-cover"
+                                />
+                            </div>
+
+                            <div className="p-3">
+                                <h4 className="font-medium text-sm mb-1 truncate">{anime.title}</h4>
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center">
+                                    <i className="fa-solid fa-star text-yellow-400 text-xs mr-1"></i>
+                                    <span className="text-sm text-gray-600">{anime.rating}</span>
+                                    </div>
+                                    <span className="text-xs px-2 py-1 bg-gray-100 rounded-full">{anime.genre}</span>
+                                </div>
+                            </div>
+                        </Link>
+                    ))}
+                  </div>
             :
             !notfound && <div className="flex flex-col items-center justify-center"><Image src={Logo} width={500} height={500} alt="search" className="w-[50svw] h-auto rounded-full" /></div> }
             {searchQuery && notfound && <h2 className="text-center my-2 text-gray-500 ">Could&apos;nt find {searchQuery}!</h2>}

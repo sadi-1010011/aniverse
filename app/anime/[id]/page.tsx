@@ -28,7 +28,7 @@ export default function AnimePage({ params }: { params: Params}) {
             {
                 selectedAnime ?
 
-            <div className="bg-white w-full h-[90vh] rounded-t-2xl overflow-y-auto">
+            <div className="bg-white w-full h-[90vh] overflow-y-auto">
             <div className="relative">
                 <Image
                 width={500}

@@ -12,7 +12,8 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
         primary: '#8B5CF6',
-        secondary: '#F59E0B'
+        secondary: '#F59E0B',
+        tertiary: '#ef4444'
       },
       input: {
         "aniverse-input": "py-2 px-4 rounded-button bg-white text-black my-1 focus:outline-none focus:ring-2 focus:ring-primary"
