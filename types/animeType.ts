@@ -18,6 +18,9 @@ export type animeType = {
         from: string|Date,
         string: string
     },
+    trailer: {
+        embed_url: string,
+    }
     entry: animeType[],
     duration: string,
     genres: [{

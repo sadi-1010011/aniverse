@@ -5,6 +5,8 @@ import Image from "next/image"
 import { use } from 'react';
 import { useEffect, useState } from "react";
 import Logo from "@/public/logo/logo.svg";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 
 type Params = Promise<{ id: string }>
@@ -12,6 +14,7 @@ type Params = Promise<{ id: string }>
 export default function AnimePage({ params }: { params: Params}) {
 
     const { id } = use(params);
+    const router = useRouter();
     const [selectedAnime, setSelectedAnime] = useState<animeType | null>();
 
     const getAnimeDetails = async () => {
@@ -21,7 +24,7 @@ export default function AnimePage({ params }: { params: Params}) {
 
     useEffect(() => {
         getAnimeDetails();
-    })
+    }, [])
 
     return (
         <div className="bg-white z-50 flex items-end text-black">
@@ -88,10 +91,10 @@ export default function AnimePage({ params }: { params: Params}) {
                 </div>
 
                 <div className="flex space-x-4">
-                <button onClick={()=> alert('Feature upcoming...')} className="flex-1 px-4 py-3 bg-primary text-white font-medium !rounded-button">
+                <Link href={{ pathname: '/player', query: { data: `${selectedAnime.trailer?.embed_url}`} }} onClick={()=> router.push('/player') } className="flex-1 text-center px-4 py-3 bg-primary text-white font-medium !rounded-button">
                     <PlayCircle className="w-5 h-5 inline mr-2" />
-                    Watch Now
-                </button>
+                    Watch Trailer
+                </Link>
                 <button className="w-12 h-12 bg-gray-100 flex items-center justify-center !rounded-button">
                     <Bookmark className="w-5 h-5 text-gray-700" />
                 </button>
