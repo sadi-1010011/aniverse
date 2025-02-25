@@ -17,7 +17,7 @@ export default function AccountPage() {
         localStorage.clear();
         initDB();
         console.log(user?.id)
-        deleteData(Stores.Users, user?.id as string).then(res => alert('deleted user'))
+        deleteData(Stores.Users, user?.id as string);
         window?.location.replace('/profile')
     }
     useEffect(() => {        
