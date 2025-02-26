@@ -8,6 +8,7 @@ import { characterType } from "@/types/characterType";
 import { addData, initDB, Stores } from "@/db/db";
 import { userType } from "@/types/userType";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function ProfilePage() {
 
@@ -76,6 +77,7 @@ export default function ProfilePage() {
                             characters.slice(0, showAllCharacters? undefined: 5).map(character => <Image onClick={()=> setSelectedCharacter(character)} key={character.value} src={character.character} width={500} height={500} alt={character.value} className={`${showAllCharacters ? 'scale-150 m-2.5' : 'scale-100' } ${ selectedCharacter === character ? `ring-2 ring-primary ${ !showAllCharacters? 'scale-110' : 'scale-[1.65]'} z-99 relative ` : 'z-0' } w-8 h-8 inline-block rounded-full active:ring-2 active:ring-primary object-fill box-content transition-transform duration-300`} />)
                         }
                     </div>
+                    <Link href="/characters" className="inline-flex items-center justify-center text-primary text-xs font-semibold capitalize my-2">Explore Character&apos;s</Link>
                     <div className="row my-2">
                         <Plus onClick={()=> setShowAllCharacters(!showAllCharacters)} className="w-5 h-5 inline rounded bg-violet-200 p-1 text-white box-content hover:bg-violet-300 active:bg-primary active:text-white transition-colors font-bold" />
                     </div>

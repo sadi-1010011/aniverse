@@ -91,13 +91,13 @@ export default function AnimePage({ params }: { params: Params}) {
                 </div>
 
                 <div className="flex space-x-4">
-                <Link href={{ pathname: '/player', query: { data: `${selectedAnime.trailer?.embed_url}`} }} onClick={()=> router.push('/player') } className="flex-1 text-center px-4 py-3 bg-primary text-white font-medium !rounded-button">
-                    <PlayCircle className="w-5 h-5 inline mr-2" />
-                    Watch Trailer
-                </Link>
-                <button className="w-12 h-12 bg-gray-100 flex items-center justify-center !rounded-button">
-                    <Bookmark className="w-5 h-5 text-gray-700" />
-                </button>
+                    <Link href={{ pathname: '/player', query: { data: `${selectedAnime.trailer?.embed_url}`} }} onClick={()=> router.push('/player') } className="flex-1 text-center px-4 py-3 bg-primary text-white font-medium !rounded-button">
+                        <PlayCircle className="w-5 h-5 inline mr-2" />
+                        Watch Trailer
+                    </Link>
+                    <button className="w-12 h-12 bg-gray-100 flex items-center justify-center !rounded-button">
+                        <Bookmark className="w-5 h-5 text-gray-700" />
+                    </button>
                 </div>
             </div>
             </div>
